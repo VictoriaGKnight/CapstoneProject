@@ -1,8 +1,11 @@
 .app { min-height: 100vh; }
 
 .container {
-  width: min(1100px, 92vw);
-  margin: 1.2rem auto 2.2rem;
+  width: 100%;
+  max-width: none;
+
+  margin: 1.25rem 0 2.5rem;
+  padding: 0 1.25rem; 
 }
 
 .page { display: flex; flex-direction: column; gap: 1.1rem; }
@@ -42,13 +45,13 @@
   .pageHeader { align-items: flex-start; flex-direction: column; }
 }
 
-/* Cards + center */
 .card {
   background: var(--surface2);
   border: 1px solid var(--border);
   border-radius: var(--radiusLg);
   box-shadow: var(--shadow);
   padding: 1rem;
+  max-width: 100%
 }
 
 .softCard {
@@ -82,15 +85,6 @@
   box-shadow: var(--shadow);
 }
 .heroActions { display: flex; gap: 0.6rem; margin: 0.9rem 0; flex-wrap: wrap; }
-
-.moodboard { height: 100%; display: grid; gap: 0.6rem; padding: 0.8rem; }
-.moodImg {
-  width: 100%;
-  height: 140px;
-  object-fit: cover;
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-}
 
 @media (max-width: 900px) {
   .hero { grid-template-columns: 1fr; }

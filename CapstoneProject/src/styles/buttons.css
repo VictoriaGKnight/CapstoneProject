@@ -1,17 +1,27 @@
-/* Top bar */
+
 .topBar {
   position: sticky;
   top: 0;
   z-index: 10;
+
+  width: 100%;
+  left: 0;
+  right: 0;
+
   backdrop-filter: blur(12px);
   background: rgba(255, 247, 249, 0.6);
   border-bottom: 1px solid var(--border);
-  padding: 0.85rem 1rem;
+
+  width: 100%;
+  padding: 0.85rem 1.25rem;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
 }
+
+
 
 .brand { display: flex; align-items: center; gap: 0.75rem; cursor: pointer; }
 .brandMark {
@@ -48,7 +58,7 @@
 
 .topBarRight { display: flex; gap: 0.5rem; }
 
-/* Buttons */
+
 .btn {
   border: 1px solid var(--border);
   border-radius: 16px;
@@ -72,7 +82,7 @@
 
 .btnGhost { background: rgba(255,255,255,0.55); }
 
-/* Spinner */
+
 .spinner {
   width: 44px;
   height: 44px;
@@ -87,7 +97,7 @@
   to { transform: rotate(360deg); }
 }
 
-/* Modal */
+
 .modalOverlay {
   position: fixed;
   inset: 0;

@@ -9,13 +9,15 @@ export default function NavBar() {
 
   return (
     <header className="topBar">
-      <div className="brand" onClick={() => navigate("/dashboard")} role="button" tabIndex={0}>
-        <div className="brandMark" aria-hidden="true">✿</div>
-        <div>
-          <div className="brandName">CraftLedger</div>
-          <div className="brandTag">maker inventory + pricing</div>
+        <div className="topBarInner">
+             <div className="brand" onClick={() => navigate("/dashboard")} role="button" tabIndex={0}>
+                 <div className="brandMark" aria-hidden="true">✿</div>
+                 <div>
+                    <div className="brandName">CraftLedger</div>
+                     <div className="brandTag">maker inventory + pricing</div>
+                 </div>
+             </div>
         </div>
-      </div>
 
       <nav className="nav">
         <NavLink to="/dashboard" className={linkClass}>Dashboard</NavLink>

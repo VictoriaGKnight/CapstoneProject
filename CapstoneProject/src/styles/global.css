@@ -1,5 +1,4 @@
 :root {
-  /* Soft “girly” palette */
   --bg: #fff7f9;
   --surface: rgba(255, 255, 255, 0.85);
   --surface2: rgba(255, 255, 255, 0.95);
@@ -29,6 +28,7 @@ html, body {
   margin: 0;
   font-family: var(--font);
   color: var(--text);
+  overflow-x: hidden;
   background:
     radial-gradient(1200px 600px at 15% 10%, var(--lavender), transparent 55%),
     radial-gradient(1100px 700px at 85% 15%, var(--cream), transparent 55%),
