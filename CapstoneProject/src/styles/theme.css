@@ -1,0 +1,20 @@
+:root{
+  --bg: #fff7fb;
+  --surface: rgba(255,255,255,0.85);
+  --surfaceSolid: #ffffff;
+
+  --text: #241c22;
+  --muted: #7a6470;
+
+  --pink: #f6b7c9;
+  --pink2:#ffd5e1;
+  --lav:#efe7ff;
+
+  --border: rgba(70,40,55,0.18);
+  --shadow: 0 12px 26px rgba(25,10,18,0.08);
+
+  --radius: 18px;
+  --radiusLg: 22px;
+  --pad: 16px;
+  --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+}

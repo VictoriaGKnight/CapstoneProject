@@ -1,33 +1,62 @@
 export default function ReportsPage() {
   return (
     <div className="page">
-      <div className="pageHeader">
-        <div>
-          <h1 className="h1">Reports</h1>
-          <p className="muted">Low stock, profitability, and inventory value (placeholder).</p>
-        </div>
-        <button className="btn btnPrimary">Export CSV</button>
-      </div>
+      <h1 className="pageTitle">Reports Dashboard</h1>
 
-      <div className="grid3">
+      <section className="reportsGrid">
         <div className="card">
-          <h2 className="h2">Low Stock</h2>
-          <p className="muted">3 materials need restocking</p>
-          <button className="btn btnSoft">View List</button>
-        </div>
-
-        <div className="card">
-          <h2 className="h2">Profitability</h2>
-          <p className="muted">Top products by profit/unit</p>
-          <button className="btn btnSoft">Open Report</button>
+          <h2 className="sectionTitle">Profit</h2>
+          <div className="chartPlaceholder">
+            <div className="bar b1" />
+            <div className="bar b2" />
+            <div className="bar b3" />
+            <div className="bar b4" />
+            <div className="bar b5" />
+            <div className="bar b6" />
+          </div>
         </div>
 
         <div className="card">
-          <h2 className="h2">Inventory Value</h2>
-          <p className="muted">Estimated total value</p>
-          <button className="btn btnSoft">Calculate</button>
+          <h2 className="sectionTitle">Top Sellers</h2>
+          <ol className="list">
+            <li>Name</li>
+            <li>Name</li>
+            <li>Name</li>
+          </ol>
         </div>
-      </div>
+
+        <div className="card">
+          <h2 className="sectionTitle">Low Stock Products</h2>
+          <div className="twoColList">
+            <div className="listCol">
+              <div>- Name</div>
+              <div>- Name</div>
+              <div>- Name</div>
+            </div>
+            <div className="listCol rightCol">
+              <div>Quantity</div>
+              <div>Quantity</div>
+              <div>Quantity</div>
+            </div>
+          </div>
+        </div>
+
+        <div className="card">
+          <h2 className="sectionTitle">Low Stock Materials</h2>
+          <div className="twoColList">
+            <div className="listCol">
+              <div>- Name</div>
+              <div>- Name</div>
+              <div>- Name</div>
+            </div>
+            <div className="listCol rightCol">
+              <div>Quantity</div>
+              <div>Quantity</div>
+              <div>Quantity</div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

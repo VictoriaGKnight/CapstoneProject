@@ -1,47 +1,88 @@
-import { useNavigate } from "react-router-dom";
-import ProductForm from "../components/ProductForm.jsx";
+import placeholder from "../assets/Placeholder.png";
 
 export default function ProductsPage() {
-  const navigate = useNavigate();
-
   return (
     <div className="page">
-      <div className="pageHeader">
-        <div>
-          <h1 className="h1">Products</h1>
-          <p className="muted">Manage finished goods + connect materials (BOM).</p>
-        </div>
-        <button className="btn btnPrimary">+ Add Product</button>
-      </div>
+      <h1 className="pageTitle">Product Page</h1>
 
-      <ProductForm />
-
-      <div className="card">
-        <div className="searchRow">
-          <input className="input" placeholder="Search products..." />
-          <button className="btn btnGhost" type="button">Filter</button>
-        </div>
-
-        <div className="grid2" style={{ marginTop: "1rem" }}>
-          <div className="card softCard">
-            <h3 className="h3">Zipper Pouch</h3>
-            <p className="muted">Stock: 6 • Suggested price: $14.00</p>
-            <div className="row">
-              <button className="btn btnSoft" onClick={() => navigate("/products/demo-1")}>View</button>
-              <button className="btn btnGhost" type="button">Edit</button>
-            </div>
+      <section className="twoColWide">
+        
+        <div className="card">
+          <div className="bigImgWrap">
+            <img className="bigImg" src={placeholder} alt="Product" />
           </div>
 
-          <div className="card softCard">
-            <h3 className="h3">Scrunchie</h3>
-            <p className="muted">Stock: 24 • Suggested price: $6.00</p>
-            <div className="row">
-              <button className="btn btnSoft" onClick={() => navigate("/products/demo-2")}>View</button>
-              <button className="btn btnGhost" type="button">Edit</button>
+          <div className="priceRow">
+            <div className="priceField">
+              <span className="mutedLabel">Suggested Price:</span>
+              <input className="input" placeholder="$" />
+            </div>
+            <div className="priceField">
+              <span className="mutedLabel">Price:</span>
+              <input className="input" placeholder="$" />
             </div>
           </div>
         </div>
-      </div>
+
+        
+        <div className="card">
+          <div className="formHeader">
+            <h2 className="sectionTitle">Details</h2>
+            <button className="btn btnPrimary productAddNewBtn">Add</button>
+          </div>
+
+          <div className="formGrid">
+            <label className="labelRow">
+              <span>Product Name:</span>
+              <input className="input"/>
+            </label>
+
+            <label className="labelRow">
+              <span>Hours Worked:</span>
+              <input className="input"/>
+            </label>
+
+            <label className="labelRow">
+              <span>Hourly Wage:</span>
+              <input className="input" placeholder/>
+            </label>
+
+            <label className="labelRow">
+              <span>Quantity:</span>
+              <input className="input"/>
+            </label>
+
+            <div className="materialsBlock">
+              <div className="materialsTitle">Materials:</div>
+
+              <div className="materialsList">
+                <div className="materialsItem">
+                  <span>1) Zipper</span>
+                  <span className="mutedLabel">Quantity:</span>
+                  <input className="input smallInput"/>
+                </div>
+
+                <div className="materialsItem">
+                  <span>2) Fabric</span>
+                  <span className="mutedLabel">Quantity:</span>
+                  <input className="input smallInput"/>
+                </div>
+              </div>
+
+              <div className="dropdownBox">
+                <select className="input">
+                  <option>Select a material</option>
+                  <option>Zipper</option>
+                  <option>Pink fabric</option>
+                  <option>Thread</option>
+                </select>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
