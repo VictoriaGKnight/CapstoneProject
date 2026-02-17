@@ -7,11 +7,14 @@ import "./styles/theme.css";
 import "./styles/base.css";
 import "./styles/layout.css";
 import "./styles/components.css";
+import { AuthProvider } from "./context/AuthContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <AuthProvider>
+        <App />
+      </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

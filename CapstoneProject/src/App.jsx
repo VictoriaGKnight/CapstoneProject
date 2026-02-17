@@ -1,6 +1,9 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import TopNav from "./components/TopNav.jsx";
 
+import LoginPage from "./pages/LoginPage.jsx";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
+
 import HomePage from "./pages/HomePage.jsx";
 import ProductsPage from "./pages/ProductsPage.jsx";
 import MaterialsPage from "./pages/MaterialsPage.jsx";
@@ -15,10 +18,42 @@ export default function App() {
       <main className="pageShell">
         <Routes>
           <Route path="/" element={<Navigate to="/home" replace />} />
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/products" element={<ProductsPage />} />
-          <Route path="/materials" element={<MaterialsPage />} />
-          <Route path="/reports" element={<ReportsPage />} />
+
+          <Route path="/login" element={<LoginPage />} />
+
+          <Route
+            path="/home"
+            element={
+              <ProtectedRoute>
+                <HomePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/products"
+            element={
+              <ProtectedRoute>
+                <ProductsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/materials"
+            element={
+              <ProtectedRoute>
+                <MaterialsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/reports"
+            element={
+              <ProtectedRoute>
+                <ReportsPage />
+              </ProtectedRoute>
+            }
+          />
+
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
