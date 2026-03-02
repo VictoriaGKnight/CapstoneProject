@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import placeholder from "../assets/Placeholder.png";
 
+import { useAuth } from "../context/AuthContext.jsx";
+import { addProduct } from "../services/productsService.js";
+
 export default function ProductsPage() {
   const fileInputRef = useRef(null);
 
@@ -41,16 +44,56 @@ export default function ProductsPage() {
     if (fileInputRef.current) fileInputRef.current.value = "";
   }
 
-  function handleAddProduct() {
-    const newProduct = {
-      name: "Example",
-      image: imageDataUrl, 
-    };
+  const { user } = useAuth();
 
-    console.log("Add product:", newProduct);
-    alert("Product added (demo). Check console.");
+  const [productName, setProductName] = useState("");
+  const [productDescription, setProductDescription] = useState("");
+  const [hoursWorked, setHoursWorked] = useState("");
+  const [hourlyWage, setHourlyWage] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [price, setPrice] = useState("");
+  const [suggestedPrice, setSuggestedPrice] = useState("");
 
+  async function handleAddProduct() {
+  if (!user) {
+    alert("You must be logged in to add products.");
+    return;
   }
+
+  if (!productName.trim()) {
+    alert("Please enter a product name.");
+    return;
+  }
+
+  
+  const newProduct = {
+    name: productName.trim(),
+    description: productDescription.trim(),
+    hoursWorked: Number(hoursWorked || 0),
+    hourlyWage: Number(hourlyWage || 0),
+    quantity: Number(quantity || 0),
+    price: Number(price || 0),
+    suggestedPrice: Number(suggestedPrice || 0),
+    image: imageDataUrl || "",
+  };
+
+  try {
+    await addProduct(user.uid, newProduct);
+    alert("Product saved to Firebase!");
+
+    setProductName("");
+    setProductDescription("");
+    setHoursWorked("");
+    setHourlyWage("");
+    setQuantity("");
+    setPrice("");
+    setSuggestedPrice("");
+    clearImage();
+  } catch (e) {
+    console.error(e);
+    alert("Error saving product: " + e.message);
+  }
+}
 
   return (
     <div className="page">
@@ -96,11 +139,21 @@ export default function ProductsPage() {
           <div className="priceRow">
             <div className="priceField">
               <span className="mutedLabel">Suggested Price:</span>
-              <input className="input" placeholder="$" />
+              <input
+                className="input"
+                placeholder="$"
+                value={suggestedPrice}
+                onChange={(e) => setSuggestedPrice(e.target.value)}
+              />
             </div>
             <div className="priceField">
               <span className="mutedLabel">Price:</span>
-              <input className="input" placeholder="$" />
+              <input
+                className="input"
+                placeholder="$"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+              />
             </div>
           </div>
         </div>
@@ -116,22 +169,47 @@ export default function ProductsPage() {
           <div className="formGrid">
             <label className="labelRow">
               <span>Product Name:</span>
-              <input className="input"/>
+              <input
+                className="input"
+                value={productName}
+                onChange={(e) => setProductName(e.target.value)}
+              />
+            </label>
+
+            <label className="labelRow">
+              <span>Product Description:</span>
+              <input
+                className="input"
+                value={productDescription}
+                onChange={(e) => setProductDescription(e.target.value)}
+              />
             </label>
 
             <label className="labelRow">
               <span>Hours Worked:</span>
-              <input className="input"/>
+              <input
+                className="input"
+                value={hoursWorked}
+                onChange={(e) => setHoursWorked(e.target.value)}
+              />
             </label>
 
             <label className="labelRow">
               <span>Hourly Wage:</span>
-              <input className="input"/>
+              <input
+                className="input"
+                value={hourlyWage}
+                onChange={(e) => setHourlyWage(e.target.value)}
+              />
             </label>
 
             <label className="labelRow">
               <span>Quantity:</span>
-              <input className="input"/>
+              <input
+                className="input"
+                value={quantity}
+                onChange={(e) => setQuantity(e.target.value)}
+              />
             </label>
 
             <div className="materialsBlock">
@@ -176,4 +254,3 @@ function readFileAsDataURL(file) {
     reader.readAsDataURL(file);
   });
 }
-

@@ -26,7 +26,7 @@ export default function TopNav() {
             <NavLink to="/home" className={linkClass}>Home</NavLink>
             <NavLink to="/products" className={linkClass}>Products</NavLink>
             <NavLink to="/materials" className={linkClass}>Materials</NavLink>
-            <NavLink to="/reports" className={linkClass}>Reports</NavLink>
+            <NavLink to="/profile" className={linkClass}>Profile</NavLink>
           </nav>
         )}
 

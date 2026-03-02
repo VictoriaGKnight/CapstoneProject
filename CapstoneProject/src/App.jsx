@@ -7,8 +7,8 @@ import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import HomePage from "./pages/HomePage.jsx";
 import ProductsPage from "./pages/ProductsPage.jsx";
 import MaterialsPage from "./pages/MaterialsPage.jsx";
-import ReportsPage from "./pages/ReportsPage.jsx";
 import NotFound from "./pages/NotFound.jsx";
+import ProfilePage from "./pages/ProfilePage.jsx";
 
 export default function App() {
   return (
@@ -45,13 +45,13 @@ export default function App() {
               </ProtectedRoute>
             }
           />
-          <Route
-            path="/reports"
+          <Route 
+            path="/profile" 
             element={
               <ProtectedRoute>
-                <ReportsPage />
+                <ProfilePage />
               </ProtectedRoute>
-            }
+            } 
           />
 
           <Route path="*" element={<NotFound />} />

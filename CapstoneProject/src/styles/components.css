@@ -241,31 +241,99 @@
   font-weight: 900;
 }
 
-/* REPORTS */
-.chartPlaceholder{
-  height: 240px;
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  background: rgba(255,255,255,0.7);
-  display: flex;
-  align-items: flex-end;
-  gap: 10px;
-  padding: 14px;
-}
-.bar{
-  width: 100%;
-  border-radius: 10px 10px 0 0;
-  background: linear-gradient(180deg, var(--pink2), var(--pink));
-  border: 1px solid rgba(70,40,55,0.10);
-}
-.b1{ height: 20%; } .b2{ height: 35%; } .b3{ height: 28%; }
-.b4{ height: 60%; } .b5{ height: 48%; } .b6{ height: 72%; }
-
-.list{ margin: 0; padding-left: 22px; font-weight: 800; }
-.twoColList{
+/* PROFILE PAGE */
+.profileLayout{
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 320px 1fr;
+  gap: 18px;
+  align-items: start;
+}
+
+.profileSidebar{
+  padding: 16px;
+}
+
+.profileUserBlock{
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: rgba(255,255,255,0.7);
+  margin-bottom: 12px;
+}
+
+.profileUsername{
+  font-weight: 900;
+  font-size: 18px;
+}
+
+.profileMenu{
+  display: grid;
   gap: 10px;
+}
+
+.profileMenuItem{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 12px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.75);
+  cursor: pointer;
   font-weight: 800;
 }
-.rightCol{ text-align: right; color: var(--muted); }
+
+.profileMenuItem.danger{
+  border-color: rgba(176,0,32,0.35);
+}
+
+.profileMain{
+  display: grid;
+  gap: 18px;
+}
+
+.profileStats{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+}
+
+.profileMoney{
+  font-size: 34px;
+  font-weight: 1000;
+  margin-top: 6px;
+}
+
+.profileMiniList{
+  margin: 8px 0 0;
+  padding-left: 18px;
+  font-weight: 800;
+}
+
+.profileSettingsRow{
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.profileSettingsFields{
+  display: grid;
+  gap: 12px;
+  width: 100%;
+  max-width: 520px;
+}
+
+.profileSettingLine{
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 12px;
+  align-items: center;
+  font-weight: 800;
+}
+
+@media (max-width: 900px){
+  .profileLayout{ grid-template-columns: 1fr; }
+  .profileStats{ grid-template-columns: 1fr; }
+  .profileSettingLine{ grid-template-columns: 1fr; }
+}
