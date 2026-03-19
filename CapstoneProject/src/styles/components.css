@@ -85,6 +85,12 @@
   border-color: rgba(246,183,201,0.7);
 }
 
+.btnDanger{
+  background: #ffe0e6;
+  border: 1px solid #e5a7b5;
+  color: #7a3042;
+}
+
 /* HOME product card */
 .productCard{ display: grid; gap: 12px; }
 .productImgWrap{ width: 100%; }
@@ -116,6 +122,18 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
+}
+
+.productActions3{
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.productCardClick{
+  border: none;
+  background: transparent;
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
 }
 
 /* PRODUCTS page */
@@ -222,6 +240,104 @@
 .materialAddBtn{
   width: 160px;
   margin-top: 6px;
+}
+
+.materialsTable{
+  grid-template-columns: 1.2fr 1.5fr 1fr 1fr 1fr;
+}
+
+.productMaterialCard{
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 12px;
+  background: rgba(255,255,255,0.78);
+  display: grid;
+  gap: 8px;
+}
+
+.productMaterialRow{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.profileLayout{
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 18px;
+}
+
+.profileSidebar{
+  display: grid;
+  gap: 12px;
+  align-self: start;
+}
+
+.profileUsername{
+  font-weight: 900;
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.profileMenuItem{
+  width: 100%;
+  text-align: left;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  padding: 12px 14px;
+  background: rgba(255,255,255,0.75);
+  font-weight: 800;
+}
+
+.profileMain{
+  display: grid;
+  gap: 18px;
+}
+
+.profileStats{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 14px;
+}
+
+.profileMoney{
+  font-size: 32px;
+  font-weight: 1000;
+}
+
+.profileMiniList{
+  margin: 8px 0 0;
+  padding-left: 18px;
+}
+
+.profileSettingsFields{
+  display: grid;
+  gap: 14px;
+}
+
+.profileSettingLine{
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 12px;
+  align-items: center;
+}
+
+@media (max-width: 900px){
+  .profileLayout{
+    grid-template-columns: 1fr;
+  }
+
+  .profileStats{
+    grid-template-columns: 1fr;
+  }
+
+  .materialsTable{
+    grid-template-columns: 1fr;
+  }
+
+  .profileSettingLine{
+    grid-template-columns: 1fr;
+  }
 }
 
 /* TABLE */

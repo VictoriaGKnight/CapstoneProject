@@ -1,14 +1,13 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import TopNav from "./components/TopNav.jsx";
-
-import LoginPage from "./pages/LoginPage.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 
+import LoginPage from "./pages/LoginPage.jsx";
 import HomePage from "./pages/HomePage.jsx";
 import ProductsPage from "./pages/ProductsPage.jsx";
 import MaterialsPage from "./pages/MaterialsPage.jsx";
-import NotFound from "./pages/NotFound.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
+import NotFound from "./pages/NotFound.jsx";
 
 export default function App() {
   return (
@@ -18,7 +17,6 @@ export default function App() {
       <main className="pageShell">
         <Routes>
           <Route path="/" element={<Navigate to="/home" replace />} />
-
           <Route path="/login" element={<LoginPage />} />
 
           <Route
@@ -38,6 +36,14 @@ export default function App() {
             }
           />
           <Route
+            path="/products/:productId"
+            element={
+              <ProtectedRoute>
+                <ProductsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
             path="/materials"
             element={
               <ProtectedRoute>
@@ -45,13 +51,13 @@ export default function App() {
               </ProtectedRoute>
             }
           />
-          <Route 
-            path="/profile" 
+          <Route
+            path="/profile"
             element={
               <ProtectedRoute>
                 <ProfilePage />
               </ProtectedRoute>
-            } 
+            }
           />
 
           <Route path="*" element={<NotFound />} />
@@ -60,4 +66,3 @@ export default function App() {
     </div>
   );
 }
-

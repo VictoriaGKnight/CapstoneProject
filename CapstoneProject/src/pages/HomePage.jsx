@@ -1,46 +1,25 @@
-/*
-import ProductCard from "../components/ProductCard.jsx";
-import placeholder from "../assets/Placeholder.png";
-
-import { useData } from "../context/DataContext.jsx";
-const { products } = useData();
-
-export default function HomePage() {
-  
-  const products = Array.from({ length: 8 }).map((_, i) => ({
-    id: i + 1,
-    name: "Name",
-    price: "0.00",
-    qty: 0,
-    imageSrc: placeholder,
-  }));
-
-  return (
-    <div className="page">
-      <h1 className="pageTitle">Home Page</h1>
-
-      <section className="gridCards">
-        {products.map((p) => (
-          <ProductCard
-            key={p.id}
-            name={p.name}
-            price={p.price}
-            qty={p.qty}
-            imageSrc={p.imageSrc}
-          />
-        ))}
-      </section>
-    </div>
-  );
-}
-*/
-
 import ProductCard from "../components/ProductCard.jsx";
 import placeholder from "../assets/Placeholder.png";
 import { useData } from "../context/DataContext.jsx";
+import { useAuth } from "../context/AuthContext.jsx";
+import { deleteProduct, updateProduct } from "../services/productsService.js";
 
 export default function HomePage() {
   const { products } = useData();
+  const { user } = useAuth();
+
+  async function handleAdjustQty(product, delta) {
+    if (!user) return;
+    const nextQty = Math.max(0, Number(product.quantity || 0) + delta);
+    await updateProduct(user.uid, product.id, { quantity: nextQty });
+  }
+
+  async function handleRemove(productId) {
+    if (!user) return;
+    const ok = window.confirm("Delete this product?");
+    if (!ok) return;
+    await deleteProduct(user.uid, productId);
+  }
 
   return (
     <div className="page">
@@ -57,10 +36,14 @@ export default function HomePage() {
           {products.map((p) => (
             <ProductCard
               key={p.id}
+              id={p.id}
               name={p.name || "Unnamed"}
               price={p.price ?? 0}
               qty={p.quantity ?? 0}
               imageSrc={p.image || placeholder}
+              onAdd={() => handleAdjustQty(p, 1)}
+              onSold={() => handleAdjustQty(p, -1)}
+              onRemove={() => handleRemove(p.id)}
             />
           ))}
         </section>

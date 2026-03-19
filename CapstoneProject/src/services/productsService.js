@@ -1,9 +1,20 @@
-import { addDoc, collection, deleteDoc, doc, serverTimestamp, updateDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  serverTimestamp,
+  updateDoc,
+} from "firebase/firestore";
 import { db } from "./firebase";
 
 export async function addProduct(uid, product) {
   const ref = collection(db, "users", uid, "products");
   return addDoc(ref, { ...product, createdAt: serverTimestamp() });
+}
+
+export function getProductRef(uid, productId) {
+  return doc(db, "users", uid, "products", productId);
 }
 
 export async function updateProduct(uid, productId, patch) {

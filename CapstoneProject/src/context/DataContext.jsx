@@ -10,11 +10,16 @@ export function DataProvider({ children }) {
 
   const [products, setProducts] = useState([]);
   const [materials, setMaterials] = useState([]);
+  const [profileSettings, setProfileSettings] = useState({
+    hourlyRate: 0,
+    lowThreshold: 5,
+  });
 
   useEffect(() => {
     if (!user) {
       setProducts([]);
       setMaterials([]);
+      setProfileSettings({ hourlyRate: 0, lowThreshold: 5 });
       return;
     }
 
@@ -30,15 +35,32 @@ export function DataProvider({ children }) {
       setMaterials(snap.docs.map((d) => ({ id: d.id, ...d.data() })));
     });
 
+    const settingsRef = collection(db, "users", user.uid, "settings");
+    const settingsQ = query(settingsRef);
+    const unsubSettings = onSnapshot(settingsQ, (snap) => {
+      const first = snap.docs[0]?.data();
+      if (first) {
+        setProfileSettings({
+          hourlyRate: Number(first.hourlyRate || 0),
+          lowThreshold: Number(first.lowThreshold || 5),
+        });
+      }
+    });
+
     return () => {
       unsubProducts();
       unsubMaterials();
+      unsubSettings();
     };
   }, [user]);
 
   const value = useMemo(
-    () => ({ products, setProducts, materials, setMaterials }),
-    [products, materials]
+    () => ({
+      products,
+      materials,
+      profileSettings,
+    }),
+    [products, materials, profileSettings]
   );
 
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>;
