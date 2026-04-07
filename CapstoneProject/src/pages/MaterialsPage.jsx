@@ -1,113 +1,221 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useData } from "../context/DataContext.jsx";
-import { addMaterial, deleteMaterial } from "../services/materialsService.js";
+import {
+  addMaterial,
+  deleteMaterial,
+  updateMaterial,
+} from "../services/materialsService.js";
+
+const emptyForm = {
+  name: "",
+  description: "",
+  unit: "",
+  quantity: "",
+  price: "",
+};
 
 export default function MaterialsPage() {
   const { user } = useAuth();
   const { materials } = useData();
 
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [unit, setUnit] = useState("");
-  const [quantity, setQuantity] = useState("");
-  const [price, setPrice] = useState("");
+  const [form, setForm] = useState(emptyForm);
+  const [editingId, setEditingId] = useState(null);
 
-  async function handleAddMaterial() {
+  const sortedMaterials = useMemo(() => {
+    return [...materials].sort((a, b) =>
+      (a.name || "").localeCompare(b.name || "")
+    );
+  }, [materials]);
+
+  const leftColumn = sortedMaterials.filter((_, i) => i % 2 === 0);
+  const rightColumn = sortedMaterials.filter((_, i) => i % 2 === 1);
+
+  function handleChange(field, value) {
+    setForm((prev) => ({ ...prev, [field]: value }));
+  }
+
+  async function handleSubmit() {
     if (!user) return;
-    if (!name.trim()) {
+
+    if (!form.name.trim()) {
       alert("Please enter a material name.");
       return;
     }
 
-    await addMaterial(user.uid, {
-      name: name.trim(),
-      description: description.trim(),
-      unit: unit.trim(),
-      quantity: Number(quantity || 0),
-      price: Number(price || 0),
-    });
+    const payload = {
+      name: form.name.trim(),
+      description: form.description.trim(),
+      unit: form.unit.trim(),
+      quantity: Number(form.quantity || 0),
+      price: Number(form.price || 0),
+    };
 
-    setName("");
-    setDescription("");
-    setUnit("");
-    setQuantity("");
-    setPrice("");
+    try {
+      if (editingId) {
+        await updateMaterial(user.uid, editingId, payload);
+        alert("Material updated.");
+      } else {
+        await addMaterial(user.uid, payload);
+        alert("Material added.");
+      }
+
+      setForm(emptyForm);
+      setEditingId(null);
+    } catch (e) {
+      console.error(e);
+      alert("Error saving material: " + e.message);
+    }
   }
 
-  async function handleDeleteMaterial(id) {
+  function startEdit(material) {
+    setEditingId(material.id);
+    setForm({
+      name: material.name || "",
+      description: material.description || "",
+      unit: material.unit || "",
+      quantity: String(material.quantity ?? ""),
+      price: String(material.price ?? ""),
+    });
+  }
+
+  function cancelEdit() {
+    setEditingId(null);
+    setForm(emptyForm);
+  }
+
+  async function handleRemove(id) {
     if (!user) return;
     const ok = window.confirm("Delete this material?");
     if (!ok) return;
-    await deleteMaterial(user.uid, id);
+
+    try {
+      await deleteMaterial(user.uid, id);
+    } catch (e) {
+      console.error(e);
+      alert("Error deleting material: " + e.message);
+    }
+  }
+
+  function MaterialCard({ material }) {
+    return (
+      <div className="materialCard">
+        <div className="materialCardHeader">
+          <div className="materialName">{material.name}</div>
+          <div className="materialActions">
+            <button className="btn btnGhost" onClick={() => startEdit(material)}>
+              Edit
+            </button>
+            <button className="btn btnDanger" onClick={() => handleRemove(material.id)}>
+              Remove
+            </button>
+          </div>
+        </div>
+
+        <div className="materialMetaGrid">
+          <div>
+            <span className="mutedLabel">Description:</span>
+            <div>{material.description || "-"}</div>
+          </div>
+          <div>
+            <span className="mutedLabel">Unit:</span>
+            <div>{material.unit || "-"}</div>
+          </div>
+          <div>
+            <span className="mutedLabel">Quantity:</span>
+            <div>{material.quantity ?? 0}</div>
+          </div>
+          <div>
+            <span className="mutedLabel">Price:</span>
+            <div>${Number(material.price || 0).toFixed(2)}</div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
     <div className="page">
       <h1 className="pageTitle">Materials Page</h1>
 
-      <section className="twoColWide">
-        <div className="card">
-          <h2 className="sectionTitle">Add Material</h2>
+      <section className="card addMaterialTopCard">
+        <h2 className="sectionTitle">
+          {editingId ? "Edit Material" : "Add Material"}
+        </h2>
 
-          <div className="formGrid">
-            <label className="labelRow">
-              <span>Material Name:</span>
-              <input className="input" value={name} onChange={(e) => setName(e.target.value)} />
-            </label>
+        <div className="addMaterialTopGrid">
+          <label className="stackLabel">
+            <span>Material Name:</span>
+            <input
+              className="input"
+              value={form.name}
+              onChange={(e) => handleChange("name", e.target.value)}
+            />
+          </label>
 
-            <label className="labelRow">
-              <span>Description:</span>
-              <input className="input" value={description} onChange={(e) => setDescription(e.target.value)} />
-            </label>
+          <label className="stackLabel">
+            <span>Unit of Measure:</span>
+            <input
+              className="input"
+              value={form.unit}
+              onChange={(e) => handleChange("unit", e.target.value)}
+            />
+          </label>
 
-            <label className="labelRow">
-              <span>Unit of Measure:</span>
-              <input className="input" value={unit} onChange={(e) => setUnit(e.target.value)} />
-            </label>
+          <label className="stackLabel addMaterialDescription">
+            <span>Description:</span>
+            <input
+              className="input"
+              value={form.description}
+              onChange={(e) => handleChange("description", e.target.value)}
+            />
+          </label>
 
-            <label className="labelRow">
-              <span>Quantity:</span>
-              <input className="input" value={quantity} onChange={(e) => setQuantity(e.target.value)} />
-            </label>
+          <label className="stackLabel">
+            <span>Quantity:</span>
+            <input
+              className="input"
+              value={form.quantity}
+              onChange={(e) => handleChange("quantity", e.target.value)}
+            />
+          </label>
 
-            <label className="labelRow">
-              <span>Cost Per Unit:</span>
-              <input className="input" value={price} onChange={(e) => setPrice(e.target.value)} />
-            </label>
+          <label className="stackLabel">
+            <span>Cost Per Unit:</span>
+            <input
+              className="input"
+              value={form.price}
+              onChange={(e) => handleChange("price", e.target.value)}
+            />
+          </label>
 
-            <button className="btn btnPrimary materialAddBtn" type="button" onClick={handleAddMaterial}>
-              Add
+          <div className="addMaterialButtons">
+            <button className="btn btnPrimary" type="button" onClick={handleSubmit}>
+              {editingId ? "Update" : "Add"}
             </button>
+
+            {editingId && (
+              <button className="btn btnGhost" type="button" onClick={cancelEdit}>
+                Cancel
+              </button>
+            )}
           </div>
         </div>
+      </section>
 
-        <div className="card">
-          <h2 className="sectionTitle">Current Materials</h2>
+      <section className="materialsSavedSection">
+        <h2 className="sectionTitle">Current Materials</h2>
 
-          <div className="simpleTable">
-            <div className="tableHeaderRow materialsTable">
-              <div>Name</div>
-              <div>Description</div>
-              <div>Unit</div>
-              <div>Quantity</div>
-              <div>Price</div>
-              <div>Remove</div>
-            </div>
+        <div className="materialsTwoColumns">
+          <div className="materialsColumn">
+            {leftColumn.map((material) => (
+              <MaterialCard key={material.id} material={material} />
+            ))}
+          </div>
 
-            {materials.map((m) => (
-              <div key={m.id} className="tableRow materialsTable">
-                <div>{m.name}</div>
-                <div>{m.description || "-"}</div>
-                <div>{m.unit || "-"}</div>
-                <div>{m.quantity ?? 0}</div>
-                <div>${Number(m.price || 0).toFixed(2)}</div>
-                <div>
-                  <button className="btn btnDanger" onClick={() => handleDeleteMaterial(m.id)}>
-                    Remove
-                  </button>
-                </div>
-              </div>
+          <div className="materialsColumn">
+            {rightColumn.map((material) => (
+              <MaterialCard key={material.id} material={material} />
             ))}
           </div>
         </div>

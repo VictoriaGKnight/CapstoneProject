@@ -97,7 +97,7 @@
 .productImg{
   width: 100%;
   height: 140px;
-  object-fit: cover;
+  object-fit: contain;
   border-radius: 16px;
   border: 1px solid var(--border);
 }
@@ -141,7 +141,7 @@
 .bigImg{
   width: 100%;
   height: 360px;
-  object-fit: cover;
+  object-fit: fill;
   border-radius: 18px;
   border: 1px solid var(--border);
 }
@@ -159,7 +159,7 @@
 .imagePicker .bigImg{
   width: 100%;
   height: 360px;
-  object-fit: cover;
+  object-fit: contain;
   border-radius: 18px;
   border: 1px solid var(--border);
   display: block;
@@ -235,6 +235,52 @@
   border-top: 1px solid var(--border);
 }
 .dropdownRow:first-child{ border-top: none; }
+
+.thumbnailGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.thumbnailCard {
+  position: relative;
+}
+
+.thumbnailButton {
+  width: 100%;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: rgba(255,255,255,0.7);
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.thumbnailActive {
+  outline: 3px solid rgba(246,183,201,0.7);
+}
+
+.thumbnailImg {
+  width: 100%;
+  height: 125px;
+  object-fit: cover;
+  display: block;
+}
+
+.thumbnailRemove {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 24px;
+  height: 24px;
+  border: none;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.92);
+  cursor: pointer;
+  font-weight: 900;
+  line-height: 1;
+}
 
 /* MATERIALS page */
 .materialAddBtn{
@@ -336,6 +382,106 @@
   }
 
   .profileSettingLine{
+    grid-template-columns: 1fr;
+  }
+}
+
+.addMaterialTopCard{
+  margin-bottom: 20px;
+}
+
+.addMaterialTopGrid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 20px;
+  align-items: end;
+}
+
+.addMaterialDescription{
+  grid-column: 1 / 2;
+}
+
+.stackLabel{
+  display: grid;
+  gap: 8px;
+  font-weight: 700;
+}
+
+.addMaterialButtons{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.materialsSavedSection{
+  display: grid;
+  gap: 12px;
+}
+
+.materialsTwoColumns{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.materialsColumn{
+  display: grid;
+  gap: 14px;
+}
+
+.materialCard{
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: rgba(255,255,255,0.82);
+  padding: 14px;
+  display: grid;
+  gap: 12px;
+}
+
+.materialCardHeader{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.materialName{
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.materialActions{
+  display: flex;
+  gap: 8px;
+}
+
+.materialMetaGrid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 16px;
+}
+
+.addMaterialRow{
+  display: grid;
+  grid-template-columns: 1fr 100px 150px;
+  gap: 10px;
+  align-items: center;
+}
+
+@media (max-width: 900px){
+  .materialsTwoColumns{
+    grid-template-columns: 1fr;
+  }
+
+  .addMaterialTopGrid{
+    grid-template-columns: 1fr;
+  }
+
+  .materialMetaGrid{
+    grid-template-columns: 1fr;
+  }
+
+  .addMaterialRow{
     grid-template-columns: 1fr;
   }
 }
